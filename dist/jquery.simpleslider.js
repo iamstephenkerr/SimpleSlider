@@ -10,13 +10,14 @@
 		this.current = -1;
 
 		this.metadata = this.$elem.data( "SimpleSlider-options" );
-
+		this.$elem.addClass('simple-slider');
+		this.nextSlide();
 	};
 
 	// the SimpleSlider prototype
 	SimpleSlider.prototype = {
 		defaults: {
-			message: "Hello world!"
+			ratio: '1:1'
 		},
 		init: function() {
 			var self = this;
@@ -32,6 +33,18 @@
 			});
 
 			return this;
+		},
+
+		updateRatio: function(){
+			var slide = {};
+
+			slide.height = this.$elem.find("[data-slide='"+(this.current+1)+"']").height();
+			slide.width = this.$elem.find("[data-slide='"+(this.current+1)+"']").width();
+
+			slide.ratio = this.defaults.ratio.split(':');
+
+
+
 		},
 
 		nextSlide: function() {

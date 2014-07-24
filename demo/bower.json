@@ -1,0 +1,26 @@
+{
+  "name": "Simple Slider",
+  "version": "1.0.0",
+  "homepage": "https://github.com/iamstephenkerr/SimpleSlider",
+  "authors": [
+    "stephen.xzien <stephen@xzien.com>"
+  ],
+  "description": "A very simple image slider",
+  "main": "jquery.SimpleSlider.js",
+  "keywords": [
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "font-awesome": "~4.1.0"
+  }
+}
