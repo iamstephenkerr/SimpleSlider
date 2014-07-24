@@ -11,19 +11,19 @@
 
 		this.metadata = this.$elem.data( "SimpleSlider-options" );
 		this.$elem.addClass('simple-slider');
-		this.nextSlide();
+		this.nextSlide(0);
 	};
 
 	// the SimpleSlider prototype
 	SimpleSlider.prototype = {
 		defaults: {
-			ratio: '1:1'
+			resizeSpeed: 400
 		},
 		init: function() {
-			var self = this;
+			var self = this,
+				waitTillStop;
 
-			this.config = $.extend({}, this.defaults, this.options,
-			this.metadata);
+			this.defaults = $.extend({}, this.defaults, this.options, this.metadata);
 
 			this.$elem.on('click', '.next', function(){
 				self.nextSlide();
@@ -32,18 +32,40 @@
 				self.previousSlide();
 			});
 
+			$(window).resize(function(){
+				clearTimeout(waitTillStop);
+				waitTillStop = setTimeout(function(){
+					self.updateHeight();
+				}, 500)
+			});
+
 			return this;
 		},
 
-		updateRatio: function(){
-			var slide = {};
+		updateHeight: function(resizeSpeed){
+			
+			var img = document.createElement('img'),
+				self = this.$elem,
+				ratio = 1;
 
-			slide.height = this.$elem.find("[data-slide='"+(this.current+1)+"']").height();
-			slide.width = this.$elem.find("[data-slide='"+(this.current+1)+"']").width();
+			$(img).load(function(){
+				this.width;
+				this.height;
 
-			slide.ratio = this.defaults.ratio.split(':');
+				ratio = this.width / this.height;
 
+				ratio = self.width() / ratio;
 
+				if(ratio > parseInt(self.css('max-height'))){
+					ratio = parseInt(self.css('max-height'));
+				}
+
+				self.animate({
+					'min-height': (ratio) + 'px'
+				}, resizeSpeed);
+			});
+
+			img.src = this.images[this.current];
 
 		},
 
@@ -68,6 +90,8 @@
 					})
 				}
 			}
+
+			this.updateHeight(this.defaults.resizeSpeed);
 		},
 
 		previousSlide: function(){
@@ -90,6 +114,8 @@
 				}
 
 			}
+
+			this.updateHeight(this.defaults.resizeSpeed);
 		}
 	}
 
