@@ -50,13 +50,13 @@
                 ratio = 1;
 
             $(img).load(function(){
+                var maxHeight = parseInt(self.css('max-height'));
 
                 ratio = this.width / this.height;
-
                 ratio = self.width() / ratio;
 
-                if(ratio > parseInt(self.css('max-height'))){
-                    ratio = parseInt(self.css('max-height'));
+                if(ratio > maxHeight){
+                    ratio = maxHeight;
                 }
 
                 self.animate({
@@ -69,21 +69,22 @@
         },
 
         nextSlide: function() {
-            
-            this.current = this.current + 1;
+            var current = this.current;
 
-            if(this.current >= this.slideCount){
+            current = current + 1;
 
-                this.current = 0;
+            if(current >= this.slideCount){
+
+                current = 0;
 
             }
 
-            if(this.current < this.slideCount){
+            if(current < this.slideCount){
 
                 this.$elem.find('[data-slide]').hide();
-                this.$elem.find('[data-slide='+(this.current+1)+']').fadeIn();
+                this.$elem.find('[data-slide=' + (current + 1) + ']').fadeIn();
 
-                if(typeof this.images[this.current] !== 'undefined'){
+                if(typeof this.images[current] !== 'undefined'){
                     this.$elem.css({
                         'background-image': 'url('+this.images[this.current]+')'
                     });
@@ -94,21 +95,22 @@
         },
 
         previousSlide: function(){
-            
-            if(0 >= this.current){
-                this.current = this.slideCount;
+            var current = this.current;
+
+            if(current <= 0){
+                current = this.slideCount;
             }
 
-            this.current = this.current - 1;
+            current = current - 1;
 
-            if(0 <= this.current){
+            if(current){
                 
                 this.$elem.find('[data-slide]').hide();
-                this.$elem.find('[data-slide='+(this.current+1)+']').fadeIn();
+                this.$elem.find('[data-slide=' + (this.current + 1) + ']').fadeIn();
                 
-                if(typeof this.images[this.current] !== 'undefined'){
+                if(typeof this.images[current] !== 'undefined'){
                     this.$elem.css({
-                        'background-image': 'url('+this.images[this.current]+')'
+                        'background-image': 'url(' + this.images[current] + ')'
                     });
                 }
 
